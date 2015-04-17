@@ -27,6 +27,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{181982
 		SccProvider = Plastic SCM
 	EndGlobalSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesTaxCalc.Infra.ConsoleUI", "SalesTaxCalc.Infra.ConsoleUI\SalesTaxCalc.Infra.ConsoleUI.csproj", "{B3BE8C00-8C2F-44DB-ABFB-495B4CA43C41}"
+	GlobalSection(PlasticSccProperties) = preSolution
+		ControlledByPlastic = True
+		SccProvider = Plastic SCM
+	EndGlobalSection
+EndProject
 Global
 	GlobalSection(PlasticSccProperties) = preSolution
 		ControlledByPlastic = True
@@ -41,12 +47,17 @@ Global
 		{84CC6487-A8BD-428B-966E-7907FB3FF664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84CC6487-A8BD-428B-966E-7907FB3FF664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84CC6487-A8BD-428B-966E-7907FB3FF664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3BE8C00-8C2F-44DB-ABFB-495B4CA43C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BE8C00-8C2F-44DB-ABFB-495B4CA43C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BE8C00-8C2F-44DB-ABFB-495B4CA43C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BE8C00-8C2F-44DB-ABFB-495B4CA43C41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{84CC6487-A8BD-428B-966E-7907FB3FF664} = {91D6C1B6-9499-4C55-9209-D0AEE00C921A}
+		{B3BE8C00-8C2F-44DB-ABFB-495B4CA43C41} = {F393720F-1C98-4D7D-9B5D-A46ECED64163}
 	EndGlobalSection
 	GlobalSection(CodealikeProperties) = postSolution
 		SolutionGuid = b83a83fc-0aad-47c6-a33e-9194ad7d5f16

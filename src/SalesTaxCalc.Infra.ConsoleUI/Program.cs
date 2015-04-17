@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// *************************************************
+// SalesTaxCalc.Infra.ConsoleUI.Program.cs
+// Last Modified: 04/16/2015 11:40 PM
+// Modified By: Bustamante, Diego (bustamd1)
+// *************************************************
 
 namespace SalesTaxCalc.Infra.ConsoleUI
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
-        {
-        }
+        private static void Main(string[] pArguments) {}
     }
 }

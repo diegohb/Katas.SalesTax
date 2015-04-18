@@ -27,6 +27,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             while (!command.ToLower().Equals("x"))
             {
                 Console.WriteLine("[LP] List products");
+                Console.WriteLine("[QC] Quick checkout");
                 Console.WriteLine("[X] Quit");
 
                 command = Console.ReadLine();
@@ -42,6 +43,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                 case "LP":
                     listProducts();
                     break;
+                case "QC":
+                    quickCheckout();
+                    break;
                 case "X":
                     Console.WriteLine("Thank you, come again...");
                     return;
@@ -56,6 +60,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             Console.Clear();
         }
 
+        #region Input Command Processors
+
         private static void listProducts()
         {
             foreach (var product in _products)
@@ -65,6 +71,14 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
             Console.WriteLine("Finished listing products.");
         }
+
+        private static void quickCheckout()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
 
         #region Support Methods
 

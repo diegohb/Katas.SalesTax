@@ -17,8 +17,13 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
         public void TenPercent_ShouldEqualOneTenth()
         {
             //arrange
+            const decimal expectedValue = 0.1m;
+
             //act
+            var tenPercent = new Percentage(10); //the ctor is the action.
+
             //assert
+            Assert.AreEqual(expectedValue, tenPercent.Value);
         }
     }
 }

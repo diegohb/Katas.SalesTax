@@ -41,15 +41,28 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             {
                 case "LP":
                     listProducts();
+                    break;
+                case "X":
+                    Console.WriteLine("Now exiting...");
                     return;
                 default:
+                    Console.WriteLine("Unrecognized command '{0}'. Please try again.", cmd);
                     return;
             }
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         private static void listProducts()
         {
-            throw new NotImplementedException();
+            foreach (var product in _products)
+            {
+                Console.WriteLine("{0} - {1} at {2:C2}", product.ProductID, product.Name, product.ShelfPrice);
+            }
+            
+            Console.WriteLine("Finished listing products.");
         }
     }
 }

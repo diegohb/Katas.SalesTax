@@ -41,7 +41,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         /// <value>
         /// The percentage value.
         /// </value>
-        public decimal PercentageValue { get; set; }
+        public decimal PercentageValue { get; private set; }
 
         /// <summary>
         /// Gets the actual value.

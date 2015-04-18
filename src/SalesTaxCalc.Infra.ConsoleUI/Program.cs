@@ -42,10 +42,41 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                 case "N":
                     shoppingCartMenu();
                     break;
+                case "A":
+                    addItemToCart();
+                    break;
                 default:
                     Console.WriteLine("Unrecognized command '{0}'. Please try again.", pCommand);
                     return;
             }
+        }
+
+        private static void addItemToCart()
+        {
+            Console.WriteLine("Choose an item to add your cart.");
+            var menu = _products.ToDictionary(p => p.ProductID.ToString(), p => p.Name);
+            presentMenu
+                ("Add items to cart", menu, "0", pMenuItem =>
+                {
+                    if (pMenuItem.Equals("0"))
+                        return;
+
+                    int productID;
+                    if (!int.TryParse(pMenuItem, out productID))
+                    {
+                        Console.WriteLine("Invalid product code. Try again.");
+                        return;
+                    }
+
+                    var product = _products.SingleOrDefault(pProduct => pProduct.ProductID.Equals(productID));
+                    if (product == null)
+                    {
+                        Console.WriteLine("Product no longer exists. Choose another");
+                        return;
+                    }
+
+                    Console.WriteLine("Added item '{0}' to your cart.", product.Name);
+                });
         }
 
         #region Input Command Processors
@@ -101,6 +132,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
                 if (pMenu.Select(pItem => pItem.Key).Any(pItem => pItem.Equals(command, StringComparison.CurrentCultureIgnoreCase)))
                     pMenuCommandHandler.Invoke(command.ToUpper());
+                else
+                    Console.WriteLine("Invalid selection.");
+
             } while (!command.Equals(pExitCmd, StringComparison.CurrentCultureIgnoreCase));
 
             Console.Clear();

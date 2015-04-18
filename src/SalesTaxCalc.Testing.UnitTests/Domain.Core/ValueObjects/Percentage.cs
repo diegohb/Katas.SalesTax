@@ -11,7 +11,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
     /// <summary>
     /// Value type that represents a percent value of 100.
     /// </summary>
-    public class Percentage : IValueObject
+    public class Percentage : IValueObject, IEquatable<Percentage>
     {
         #region Constructors
 
@@ -52,6 +52,11 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         public decimal ActualValue
         {
             get { return PercentageValue/100m; }
+        }
+
+        public bool Equals(Percentage pOtherPercentage)
+        {
+            return pOtherPercentage != null && PercentageValue.Equals(pOtherPercentage.PercentageValue);
         }
 
         public override string ToString()

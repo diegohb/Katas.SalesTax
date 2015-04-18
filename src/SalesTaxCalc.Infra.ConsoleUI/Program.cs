@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Infra.ConsoleUI.Program.cs
-// Last Modified: 04/18/2015 1:26 PM
+// Last Modified: 04/18/2015 5:03 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -24,7 +24,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             initializeInventory();
 
-            var mainMenu = new Dictionary<string, string>() { { "P", "Products" }, { "N", "New Shopping Cart" } };
+            var mainMenu = new Dictionary<string, string>() {{"P", "Products"}, {"N", "New Shopping Cart"}};
             presentMenu("Main Menu", mainMenu, "X", processCommand);
             Console.WriteLine();
             Console.WriteLine("Thank you, come again...");
@@ -54,12 +54,12 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                     return;
             }
         }
-        
+
         #region Input Command Processors
 
         private static void productMenu()
         {
-            var productMenu = new Dictionary<string, string>() { { "L", "List all products" } };
+            var productMenu = new Dictionary<string, string>() {{"L", "List all products"}};
             presentMenu("Products", productMenu, "X", processCommand);
         }
 
@@ -86,6 +86,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         private static void addItemToCart()
         {
+            ensureActiveCartIsInitialized();
+
             Console.WriteLine("Choose an item to add your cart.");
             var menu = _products.ToDictionary(p => p.ProductID.ToString(), p => p.GetNameWithPrice());
             presentMenu
@@ -122,17 +124,29 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         private static void viewItemsInCart()
         {
+            ensureActiveCartIsInitialized();
+
             Console.WriteLine("{0} item{1} currently in cart:", _activeCart.Items.Count, _activeCart.Items.Count > 1 ? "s" : string.Empty);
             foreach (var cartItem in _activeCart.Items)
             {
                 Console.WriteLine("{0} {1}", 1, cartItem.GetNameWithPrice());
             }
+        }
 
+        private static void printReceipt()
+        {
+            ensureActiveCartIsInitialized();
         }
 
         #endregion
 
         #region Support Methods
+
+        private static void ensureActiveCartIsInitialized()
+        {
+            if (_activeCart == null)
+                throw new NullReferenceException("Active cart is not initialized!");
+        }
 
         private static void presentMenu(string pMenuTitle, Dictionary<string, string> pMenu, string pExitCmd, Action<string> pMenuCommandHandler)
         {
@@ -157,7 +171,6 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                     pMenuCommandHandler.Invoke(command.ToUpper());
                 else
                     Console.WriteLine("Invalid selection.");
-
             } while (!command.Equals(pExitCmd, StringComparison.CurrentCultureIgnoreCase));
 
             Console.Clear();
@@ -185,7 +198,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
             var importTariffApplicable = pIsImported ? importTariffValue : 0m;
             var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
-            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue };
+            var product = new Product(getNextProductID(), pName, pShelfPrice) {ProductType = pType, TaxRateValue = assessedTaxValue};
             return product;
         }
 

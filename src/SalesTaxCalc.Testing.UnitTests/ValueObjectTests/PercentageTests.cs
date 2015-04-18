@@ -57,5 +57,22 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
             //assert
             Assert.AreEqual(expectedActualValue, actualValueFromPercentage);
         }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void Percentage_ToStringShouldFormatPercentageValue()
+        {
+            //arrange
+            const decimal percentageValue = 10.9m;
+            const string expectedPercentageValueFormatted = "10.90 %"; //NOTE: proper U.S. format per ISO-31-0 includes space after numeric value.
+
+            //act
+            var percentageUnderTest = new Percentage(percentageValue);
+            var actualPercentageValueFormatted = percentageUnderTest.ToString();
+
+            //assert
+            Assert.AreSame(expectedPercentageValueFormatted, actualPercentageValueFormatted);
+
+        }
     }
 }

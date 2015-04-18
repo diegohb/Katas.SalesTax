@@ -46,7 +46,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
                 into prodGroup
                 let quantity = prodGroup.Count()
                 let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity
-                let taxTotal = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*quantity)
+                let taxTotal = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*shelfPriceTotal)*quantity
                 select
                     new ReceiptLineItem
                         (prodGroup.Key.ProductID, prodGroup.Key.Name, quantity, taxTotal,

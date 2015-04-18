@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.TaxRateTests.cs
-// Last Modified: 04/17/2015 8:37 PM
+// Last Modified: 04/17/2015 10:07 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -14,7 +14,7 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
     public class TaxRateTests
     {
         private readonly Percentage _basicSalesTax = new Percentage(10);
-        private Percentage _importTaxTariff = new Percentage(5);
+        private readonly Percentage _importTaxTariff = new Percentage(5);
 
         [Test]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -23,7 +23,7 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
             //arrange
             const decimal expectedActualValue = 0.1m;
             const string expectedPercentageValueFormatted = "10.00 %";
-            
+
             //act
             var actualActualValue = _basicSalesTax.ActualValue;
             var actualFormattedPercentageValue = _basicSalesTax.ToString();
@@ -38,8 +38,16 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
         public void ImportTariff_ShouldBeFivePercent()
         {
             //arrange
+            const decimal expectedActualValue = 0.05m;
+            const string expectedPercentageValueFormatted = "5.00 %";
+
             //act
+            var actualActualValue = _importTaxTariff.ActualValue;
+            var actualFormattedPercentageValue = _importTaxTariff.ToString();
+
             //assert
+            Assert.AreEqual(expectedActualValue, actualActualValue);
+            Assert.AreEqual(expectedPercentageValueFormatted, actualFormattedPercentageValue);
         }
     }
 }

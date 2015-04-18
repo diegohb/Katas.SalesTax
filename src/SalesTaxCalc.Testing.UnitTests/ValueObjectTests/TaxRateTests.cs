@@ -13,7 +13,7 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
     [TestFixture]
     public class TaxRateTests
     {
-        private Percentage _basicSalesTax = new Percentage(10);
+        private readonly Percentage _basicSalesTax = new Percentage(10);
         private Percentage _importTaxTariff = new Percentage(5);
 
         [Test]
@@ -21,8 +21,16 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
         public void BasicSalesTax_ShouldBeTenPercent()
         {
             //arrange
+            const decimal expectedActualValue = 0.1m;
+            const string expectedPercentageValueFormatted = "10.00 %";
+            
             //act
+            var actualActualValue = _basicSalesTax.ActualValue;
+            var actualFormattedPercentageValue = _basicSalesTax.ToString();
+
             //assert
+            Assert.AreEqual(expectedActualValue, actualActualValue);
+            Assert.AreEqual(expectedPercentageValueFormatted, actualFormattedPercentageValue);
         }
 
         [Test]

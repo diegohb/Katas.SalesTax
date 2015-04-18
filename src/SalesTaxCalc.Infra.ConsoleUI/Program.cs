@@ -78,7 +78,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         private static Product createProduct(string pName, decimal pShelfPrice, bool pIsImported = false, ProductTypeEnum pType = ProductTypeEnum.Other)
         {
-            return new Product {ProductID = getNextProductID(), Name = pName, ProductType = pType, ShelfPrice = pShelfPrice};
+            var product = new Product(getNextProductID(), pName, pShelfPrice) {ProductType = pType};
+            return product;
         }
 
         private static int getNextProductID()

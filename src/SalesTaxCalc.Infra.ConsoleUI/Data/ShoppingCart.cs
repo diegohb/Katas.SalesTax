@@ -1,13 +1,13 @@
 ﻿// *************************************************
 // SalesTaxCalc.Infra.ConsoleUI.ShoppingCart.cs
-// Last Modified: 04/18/2015 4:05 PM
+// Last Modified: 04/18/2015 5:03 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Infra.ConsoleUI.Data
 {
-    using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ShoppingCart
     {
@@ -36,6 +36,24 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
         {
             for (var itemCount = 0; itemCount < pQuantity; itemCount++)
                 _items.Add(pProduct);
+        }
+
+        public IEnumerable<ReceiptLineItem> GetLineItems()
+        {
+            return from item in _items
+                group item.ProductID by item
+                into prodGroup
+                let quantity = prodGroup.Count()
+                let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity
+                let taxTotal = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*quantity)
+                select
+                    new ReceiptLineItem(prodGroup.Key.ProductID, prodGroup.Key.Name, quantity, taxTotal, shelfPriceTotal, shelfPriceTotal + taxTotal);
+        }
+
+        private decimal roundToNearestOneTwentieth(decimal pValue)
+        {
+            //TODO: implement rounding
+            return pValue;
         }
     }
 }

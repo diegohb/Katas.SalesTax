@@ -140,10 +140,13 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             ensureActiveCartIsInitialized();
 
-            var lines = _activeCart.GetLineItems();
-            foreach (var lineItem in lines)
+            var lineItems = _activeCart.GetLineItems();
+            foreach (var lineItem in lineItems)
             {
-                Console.WriteLine("{0}: {1} ({2} @ {3})", lineItem.Name, lineItem.Total, lineItem.Quantity, lineItem.ShelfPrice);
+                if (lineItem.Quantity > 1)
+                    Console.WriteLine("{0}: {1} ({2} @ {3})", lineItem.Name, lineItem.Total, lineItem.Quantity, lineItem.ShelfPrice);
+                else if (lineItem.Quantity == 1)
+                    Console.WriteLine("{0}: {1}", lineItem.Name, lineItem.Total);
             }
             var salesTaxTotal = _activeCart.GetTotalSalesTax();
             var grandTotal = _activeCart.GetGrandTotal();

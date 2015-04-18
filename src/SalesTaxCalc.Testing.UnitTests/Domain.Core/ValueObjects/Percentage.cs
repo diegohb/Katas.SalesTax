@@ -13,6 +13,8 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
     /// </summary>
     public class Percentage : IValueObject, IEquatable<Percentage>
     {
+        private readonly decimal _percentageValue;
+
         #region Constructors
 
         /// <summary>
@@ -21,7 +23,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         /// <param name="pPercentageValue">The integer percentage value.</param>
         public Percentage(int pPercentageValue)
         {
-            PercentageValue = Convert.ToDecimal(pPercentageValue);
+            _percentageValue = Convert.ToDecimal(pPercentageValue);
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         /// <param name="pPercentageValue">The decimal percentage value.</param>
         public Percentage(decimal pPercentageValue)
         {
-            PercentageValue = pPercentageValue;
+            _percentageValue = pPercentageValue;
         }
 
         #endregion
@@ -43,7 +45,10 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         /// <value>
         /// The percentage value.
         /// </value>
-        public decimal PercentageValue { get; private set; }
+        public decimal PercentageValue
+        {
+            get { return _percentageValue; }
+        }
 
         /// <summary>
         /// Gets the actual value.

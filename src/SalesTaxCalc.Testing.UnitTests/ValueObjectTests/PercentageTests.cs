@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.PercentageTests.cs
-// Last Modified: 04/17/2015 9:16 PM
+// Last Modified: 04/17/2015 9:28 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -71,8 +71,7 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
             var actualPercentageValueFormatted = percentageUnderTest.ToString();
 
             //assert
-            Assert.AreSame(expectedPercentageValueFormatted, actualPercentageValueFormatted);
-
+            Assert.AreEqual(expectedPercentageValueFormatted, actualPercentageValueFormatted);
         }
     }
 }

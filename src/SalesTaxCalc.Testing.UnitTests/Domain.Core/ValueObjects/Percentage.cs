@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.Percentage.cs
-// Last Modified: 04/17/2015 9:05 PM
+// Last Modified: 04/17/2015 9:28 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -52,6 +52,16 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         public decimal ActualValue
         {
             get { return PercentageValue/100m; }
+        }
+
+        public override string ToString()
+        {
+            /*NOTE: 
+             * assumption - round up to second decimal.
+             * Will format to percentage respecting current culture. 
+             * reference https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.100).aspx#PFormatString
+             */
+            return ActualValue.ToString("P2");
         }
     }
 }

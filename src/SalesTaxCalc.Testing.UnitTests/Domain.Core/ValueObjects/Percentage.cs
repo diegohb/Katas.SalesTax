@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.Percentage.cs
-// Last Modified: 04/17/2015 9:28 PM
+// Last Modified: 04/17/2015 9:51 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -54,6 +54,11 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
             get { return PercentageValue/100m; }
         }
 
+        /// <summary>
+        /// Equalses the specified p other percentage.
+        /// </summary>
+        /// <param name="pOtherPercentage">The other percentage object.</param>
+        /// <returns><c>true</c> if are equal value.</returns>
         public bool Equals(Percentage pOtherPercentage)
         {
             return pOtherPercentage != null && PercentageValue.Equals(pOtherPercentage.PercentageValue);
@@ -69,11 +74,24 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
             return ActualValue.ToString("P2");
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return PercentageValue.GetHashCode();
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="pOtherObject">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object pOtherObject)
         {
             var percentageObj = pOtherObject as Percentage;

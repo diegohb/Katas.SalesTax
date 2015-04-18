@@ -20,5 +20,10 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
         public decimal ShelfPrice { get; private set; }
         public decimal TaxRateValue { get; set; }
         public ProductTypeEnum ProductType { get; set; }
+
+        public string GetNameWithPrice()
+        {
+            return string.Format("{0} @ {1:C2}", Name, ShelfPrice);
+        }
     }
 }

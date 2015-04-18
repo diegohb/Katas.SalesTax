@@ -67,7 +67,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             foreach (var product in _products)
             {
-                Console.WriteLine("{0} - {1} at {2:C2}", product.ProductID, product.Name, product.ShelfPrice);
+                Console.WriteLine("{0} - {1}", product.ProductID, product.GetNameWithPrice());
             }
             Console.WriteLine("Finished listing products.");
         }
@@ -87,7 +87,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         private static void addItemToCart()
         {
             Console.WriteLine("Choose an item to add your cart.");
-            var menu = _products.ToDictionary(p => p.ProductID.ToString(), p => p.Name);
+            var menu = _products.ToDictionary(p => p.ProductID.ToString(), p => p.GetNameWithPrice());
             presentMenu
                 ("Add items to cart", menu, "x", pMenuItem =>
                 {
@@ -108,7 +108,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                         return;
                     }
 
-                    Console.Write("How many '{0}' would you like to add? ", product.Name);
+                    Console.Write("How many '{0}' would you like to add? ", product.GetNameWithPrice());
                     int quantity;
                     if (int.TryParse(Console.ReadLine(), out quantity))
                     {
@@ -125,7 +125,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             Console.WriteLine("{0} item{1} currently in cart:", _activeCart.Items.Count, _activeCart.Items.Count > 1 ? "s" : string.Empty);
             foreach (var cartItem in _activeCart.Items)
             {
-                Console.WriteLine("{0} {1}", 1, cartItem.Name);
+                Console.WriteLine("{0} {1}", 1, cartItem.GetNameWithPrice());
             }
 
         }

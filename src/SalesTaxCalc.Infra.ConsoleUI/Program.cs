@@ -24,7 +24,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             initializeInventory();
 
-            var mainMenu = new Dictionary<string, string>() {{"P", "Products"}, {"N", "New Shopping Cart"}};
+            var mainMenu = new Dictionary<string, string>() { { "P", "Products" }, { "N", "New Shopping Cart" } };
             presentMenu("Main Menu", mainMenu, "X", processCommand);
             Console.WriteLine();
             Console.WriteLine("Thank you, come again...");
@@ -62,7 +62,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         private static void productMenu()
         {
-            var productMenu = new Dictionary<string, string>() {{"L", "List all products"}};
+            var productMenu = new Dictionary<string, string>() { { "L", "List all products" } };
             presentMenu("Products", productMenu, "X", processCommand);
         }
 
@@ -141,17 +141,18 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             ensureActiveCartIsInitialized();
 
             var lineItems = _activeCart.GetLineItems();
-            foreach (var lineItem in lineItems)
-            {
-                if (lineItem.Quantity > 1)
-                    Console.WriteLine("{0}: {1} ({2} @ {3})", lineItem.Name, lineItem.Total, lineItem.Quantity, lineItem.ShelfPrice);
-                else if (lineItem.Quantity == 1)
-                    Console.WriteLine("{0}: {1}", lineItem.Name, lineItem.Total);
-            }
+            var lineItemStrings = lineItems.Where(pItem => pItem.Quantity > 0)
+                .Select
+                (pItem => pItem.Quantity > 1
+                    ? string.Format("{0}: {1} ({2} @ {3})", pItem.Name, pItem.Total, pItem.Quantity, pItem.ShelfPrice)
+                    : string.Format("{0}: {1}", pItem.Name, pItem.Total));
+            Console.WriteLine(string.Join("\n", lineItemStrings));
+
             var salesTaxTotal = _activeCart.GetTotalSalesTax();
             var grandTotal = _activeCart.GetGrandTotal();
             Console.WriteLine("Sales Taxes: {0:C2}", salesTaxTotal);
             Console.WriteLine("Total: {0:C2}", grandTotal);
+            
             Console.WriteLine();
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
@@ -217,7 +218,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
             var importTariffApplicable = pIsImported ? importTariffValue : 0m;
             var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
-            var product = new Product(getNextProductID(), pName, pShelfPrice) {ProductType = pType, TaxRateValue = assessedTaxValue};
+            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue };
             return product;
         }
 

@@ -8,6 +8,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Data;
 
     internal class Program
@@ -24,33 +25,26 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
             var command = "";
 
-            while (!command.ToLower().Equals("x"))
-            {
-                Console.WriteLine("[LP] List products");
-                Console.WriteLine("[QC] Quick checkout");
-                Console.WriteLine("[X] Quit");
-
-                command = Console.ReadLine();
-                processCommand(command);
-            }
+            var mainMenu = new Dictionary<string, string>() { { "P", "Products" }, { "N", "New Shopping Cart" } };
+            presentMenu(mainMenu, "x", processCommand);
+            Console.WriteLine("Thank you, come again...");
         }
 
         private static void processCommand(string pCommand)
         {
-            var cmd = pCommand.ToUpper();
-            switch (cmd)
+            switch (pCommand)
             {
-                case "LP":
+                case "P":
+                    productMenu();
+                    break;
+                case "L":
                     listProducts();
                     break;
-                case "QC":
-                    quickCheckout();
+                case "N":
+                    shoppingCartMenu();
                     break;
-                case "X":
-                    Console.WriteLine("Thank you, come again...");
-                    return;
                 default:
-                    Console.WriteLine("Unrecognized command '{0}'. Please try again.", cmd);
+                    Console.WriteLine("Unrecognized command '{0}'. Please try again.", pCommand);
                     return;
             }
 
@@ -62,6 +56,16 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         #region Input Command Processors
 
+        private static void productMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("PRODUCTS");
+
+            var productMenu = new Dictionary<string, string>() {{"L", "List all products"}};
+            presentMenu(productMenu, "", processCommand);
+
+        }
+
         private static void listProducts()
         {
             foreach (var product in _products)
@@ -72,15 +76,31 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             Console.WriteLine("Finished listing products.");
         }
 
-        private static void quickCheckout()
+        private static void shoppingCartMenu()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine("Quick Checkout");
         }
 
         #endregion
 
-
         #region Support Methods
+
+        private static void presentMenu(Dictionary<string, string> pMenu, string pExitCmd, Action<string> pMenuCommandHandler)
+        {
+            var command = "";
+            while (!command.Equals(pExitCmd, StringComparison.CurrentCultureIgnoreCase))
+            {
+                foreach (var menuItem in pMenu)
+                    Console.WriteLine("[{0}] {1}", menuItem.Key, menuItem.Value);
+
+                Console.WriteLine("[{0}] Exit", pExitCmd);
+
+                command = Console.ReadLine() ?? "";
+                if (pMenu.Select(pItem => pItem.Key).Any(pItem => pItem.Equals(command, StringComparison.CurrentCultureIgnoreCase)))
+                    pMenuCommandHandler.Invoke(command.ToUpper());
+            }
+        }
 
         private static void initializeInventory()
         {
@@ -104,7 +124,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
             var importTariffApplicable = pIsImported ? importTariffValue : 0m;
             var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
-            var product = new Product(getNextProductID(), pName, pShelfPrice) {ProductType = pType, TaxRateValue = assessedTaxValue};
+            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue };
             return product;
         }
 

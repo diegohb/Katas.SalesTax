@@ -7,5 +7,10 @@
 namespace SalesTaxCalc.Infra.ConsoleUI.Data
 {
     public enum ProductTypeEnum
-    {}
+    {
+        Other,
+        Book,
+        Food,
+        Medical
+    }
 }

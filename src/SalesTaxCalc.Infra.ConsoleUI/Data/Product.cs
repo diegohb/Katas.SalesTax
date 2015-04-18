@@ -6,5 +6,12 @@
 
 namespace SalesTaxCalc.Infra.ConsoleUI.Data
 {
-    public class Product {}
+    public class Product
+    {
+        public int ProductID { get; set; }
+        public string Name { get; set; }
+        public decimal ShelfPrice { get; set; }
+        public decimal TaxRateValue { get; set; }
+        public ProductTypeEnum ProductType { get; set; }
+    }
 }

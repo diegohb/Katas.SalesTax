@@ -12,9 +12,11 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
     internal class Program
     {
+        private static List<Product> _products;
+
         private static void Main(string[] pArguments)
         {
-            var products = new List<Product>()
+            _products = new List<Product>()
             {
                 new Product {Name = "book", ProductType = ProductTypeEnum.Book, ShelfPrice = 12.49m},
                 new Product {Name = "music CD", ProductType = ProductTypeEnum.Other, ShelfPrice = 12.49m}
@@ -28,7 +30,26 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                 Console.WriteLine("[X] Quit");
 
                 command = Console.ReadLine();
+                processCommand(command);
             }
+        }
+
+        private static void processCommand(string pCommand)
+        {
+            var cmd = pCommand.ToUpper();
+            switch (cmd)
+            {
+                case "LP":
+                    listProducts();
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private static void listProducts()
+        {
+            throw new NotImplementedException();
         }
     }
 }

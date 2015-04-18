@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Infra.ConsoleUI.ShoppingCart.cs
-// Last Modified: 04/18/2015 1:41 PM
+// Last Modified: 04/18/2015 1:46 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -10,7 +10,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
 
     public class ShoppingCart
     {
-        private IList<Product> _items;
+        private readonly IList<Product> _items;
 
         #region Constructors
 
@@ -25,5 +25,11 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
         }
 
         #endregion
+
+        public void AddItem(Product pProduct, int pQuantity)
+        {
+            for (var itemCount = 0; itemCount < pQuantity; itemCount++)
+                _items.Add(pProduct);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Infra.ConsoleUI.ShoppingCart.cs
-// Last Modified: 04/18/2015 5:03 PM
+// Last Modified: 04/18/2015 5:15 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -47,7 +47,19 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
                 let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity
                 let taxTotal = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*quantity)
                 select
-                    new ReceiptLineItem(prodGroup.Key.ProductID, prodGroup.Key.Name, quantity, taxTotal, shelfPriceTotal, shelfPriceTotal + taxTotal);
+                    new ReceiptLineItem
+                        (prodGroup.Key.ProductID, prodGroup.Key.Name, quantity, taxTotal,
+                            prodGroup.Key.ShelfPrice, shelfPriceTotal, shelfPriceTotal + taxTotal);
+        }
+
+        public decimal GetTotalSalesTax()
+        {
+            return GetLineItems().Sum(pLine => pLine.TaxTotal);
+        }
+
+        public decimal GetGrandTotal()
+        {
+            return GetLineItems().Sum(pLine => pLine.Total);
         }
 
         private decimal roundToNearestOneTwentieth(decimal pValue)

@@ -1,31 +1,34 @@
 // *************************************************
 // SalesTaxCalc.Infra.ConsoleUI.ReceiptLineItem.cs
-// Last Modified: 04/18/2015 5:03 PM
+// Last Modified: 04/18/2015 5:15 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Infra.ConsoleUI.Data
 {
-    using System.Collections.Generic;
+    using System;
     using System.Text;
 
-    public class ReceiptLineItem
+    public class ReceiptLineItem : IEquatable<ReceiptLineItem>
     {
         private readonly int _productID;
         private readonly string _name;
         private readonly int _quantity;
         private readonly decimal _taxTotal;
         private readonly decimal _shelfPriceTotal;
-        private readonly decimal _subTotal;
+        private readonly decimal _total;
+        private readonly decimal _shelfPrice;
 
-        public ReceiptLineItem(int pProductID, string pName, int pQuantity, decimal pTaxTotal, decimal pShelfPriceTotal, decimal pSubTotal)
+        public ReceiptLineItem
+            (int pProductID, string pName, int pQuantity, decimal pTaxTotal, decimal pShelfPrice, decimal pShelfPriceTotal, decimal pTotal)
         {
             _productID = pProductID;
             _name = pName;
             _quantity = pQuantity;
             _taxTotal = pTaxTotal;
             _shelfPriceTotal = pShelfPriceTotal;
-            _subTotal = pSubTotal;
+            _total = pTotal;
+            _shelfPrice = pShelfPrice;
         }
 
         public int ProductID
@@ -48,14 +51,19 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
             get { return _taxTotal; }
         }
 
+        public decimal ShelfPrice
+        {
+            get { return _shelfPrice; }
+        }
+
         public decimal ShelfPriceTotal
         {
             get { return _shelfPriceTotal; }
         }
 
-        public decimal SubTotal
+        public decimal Total
         {
-            get { return _subTotal; }
+            get { return _total; }
         }
 
         public override string ToString()
@@ -69,33 +77,50 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
             builder.Append(Quantity);
             builder.Append(", TaxTotal = ");
             builder.Append(TaxTotal);
+            builder.Append(", ShelfPrice = ");
+            builder.Append(ShelfPrice);
             builder.Append(", ShelfPriceTotal = ");
             builder.Append(ShelfPriceTotal);
-            builder.Append(", SubTotal = ");
-            builder.Append(SubTotal);
+            builder.Append(", Total = ");
+            builder.Append(Total);
             builder.Append(" }");
             return builder.ToString();
         }
 
-        public override bool Equals(object value)
+        #region Equality
+
+        public bool Equals(ReceiptLineItem pOther)
         {
-            var type = value as ReceiptLineItem;
-            return (type != null) && EqualityComparer<int>.Default.Equals(type.ProductID, ProductID)
-                   && EqualityComparer<string>.Default.Equals(type.Name, Name) && EqualityComparer<int>.Default.Equals(type.Quantity, Quantity)
-                   && EqualityComparer<decimal>.Default.Equals(type.TaxTotal, TaxTotal)
-                   && EqualityComparer<decimal>.Default.Equals(type.ShelfPriceTotal, ShelfPriceTotal)
-                   && EqualityComparer<decimal>.Default.Equals(type.SubTotal, SubTotal);
+            if (ReferenceEquals(null, pOther)) return false;
+            if (ReferenceEquals(this, pOther)) return true;
+            return _productID == pOther._productID && string.Equals(_name, pOther._name) && _quantity == pOther._quantity
+                   && _taxTotal == pOther._taxTotal
+                   && _shelfPriceTotal == pOther._shelfPriceTotal && _total == pOther._total && _shelfPrice == pOther._shelfPrice;
+        }
+
+        public override bool Equals(object pObject)
+        {
+            if (ReferenceEquals(null, pObject)) return false;
+            if (ReferenceEquals(this, pObject)) return true;
+            if (pObject.GetType() != this.GetType()) return false;
+            return Equals((ReceiptLineItem) pObject);
         }
 
         public override int GetHashCode()
         {
-            int num = 0x7a2f0b42;
-            num = (-1521134295*num) + EqualityComparer<int>.Default.GetHashCode(ProductID);
-            num = (-1521134295*num) + EqualityComparer<string>.Default.GetHashCode(Name);
-            num = (-1521134295*num) + EqualityComparer<int>.Default.GetHashCode(Quantity);
-            num = (-1521134295*num) + EqualityComparer<decimal>.Default.GetHashCode(TaxTotal);
-            num = (-1521134295*num) + EqualityComparer<decimal>.Default.GetHashCode(ShelfPriceTotal);
-            return (-1521134295*num) + EqualityComparer<decimal>.Default.GetHashCode(SubTotal);
+            unchecked
+            {
+                var hashCode = _productID;
+                hashCode = (hashCode*397) ^ (_name != null ? _name.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ _quantity;
+                hashCode = (hashCode*397) ^ _taxTotal.GetHashCode();
+                hashCode = (hashCode*397) ^ _shelfPriceTotal.GetHashCode();
+                hashCode = (hashCode*397) ^ _total.GetHashCode();
+                hashCode = (hashCode*397) ^ _shelfPrice.GetHashCode();
+                return hashCode;
+            }
         }
+
+        #endregion
     }
 }

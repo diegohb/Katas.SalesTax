@@ -73,5 +73,22 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
             //assert
             Assert.AreEqual(expectedPercentageValueFormatted, actualPercentageValueFormatted);
         }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void Percentage_EqualPercentageObjectsShouldReturnEqualityTrue()
+        {
+            //arrange
+            const decimal percentageValue = 5m;
+            const decimal fractionalPercentageValue = 15.578m;
+            var wholePercentageUnderTest = new Percentage(percentageValue);
+            var fractionalPercentageUnderTest = new Percentage(fractionalPercentageValue);
+
+            //act & assert
+            var expectedWholePercentage = new Percentage(percentageValue);
+            Assert.IsTrue(wholePercentageUnderTest.Equals(expectedWholePercentage));
+            var expectedFractionalPercentage = new Percentage(fractionalPercentageValue);
+            Assert.IsTrue(fractionalPercentageUnderTest.Equals(expectedFractionalPercentage));
+        }
     }
 }

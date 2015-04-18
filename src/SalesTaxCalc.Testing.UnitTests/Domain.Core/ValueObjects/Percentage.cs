@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.Percentage.cs
-// Last Modified: 04/17/2015 9:51 PM
+// Last Modified: 04/17/2015 10:54 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -35,6 +35,8 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
 
         #endregion
 
+        #region Properties
+
         /// <summary>
         /// Gets or sets the percentage value.
         /// </summary>
@@ -54,15 +56,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
             get { return PercentageValue/100m; }
         }
 
-        /// <summary>
-        /// Equalses the specified p other percentage.
-        /// </summary>
-        /// <param name="pOtherPercentage">The other percentage object.</param>
-        /// <returns><c>true</c> if are equal value.</returns>
-        public bool Equals(Percentage pOtherPercentage)
-        {
-            return pOtherPercentage != null && PercentageValue.Equals(pOtherPercentage.PercentageValue);
-        }
+        #endregion
 
         public override string ToString()
         {
@@ -72,6 +66,18 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
              * reference https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.100).aspx#PFormatString
              */
             return ActualValue.ToString("P2");
+        }
+
+        #region Value Equality
+
+        /// <summary>
+        /// Equalses the specified p other percentage.
+        /// </summary>
+        /// <param name="pOtherPercentage">The other percentage object.</param>
+        /// <returns><c>true</c> if are equal value.</returns>
+        public bool Equals(Percentage pOtherPercentage)
+        {
+            return pOtherPercentage != null && PercentageValue.Equals(pOtherPercentage.PercentageValue);
         }
 
         /// <summary>
@@ -100,5 +106,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
 
             return PercentageValue.Equals(percentageObj.PercentageValue);
         }
+
+        #endregion
     }
 }

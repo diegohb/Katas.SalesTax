@@ -6,6 +6,7 @@
 
 namespace SalesTaxCalc.Infra.ConsoleUI.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -64,8 +65,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
 
         private decimal roundToNearestOneTwentieth(decimal pValue)
         {
-            //TODO: implement rounding
-            return pValue;
+            //ref: http://stackoverflow.com/a/1448465/1240322
+            return Math.Ceiling(pValue*20)/20;
         }
     }
 }

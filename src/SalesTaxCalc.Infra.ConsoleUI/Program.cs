@@ -13,13 +13,14 @@ namespace SalesTaxCalc.Infra.ConsoleUI
     internal class Program
     {
         private static List<Product> _products;
+        private static int _nextProductID = 0;
 
         private static void Main(string[] pArguments)
         {
             _products = new List<Product>()
             {
-                new Product {Name = "book", ProductType = ProductTypeEnum.Book, ShelfPrice = 12.49m},
-                new Product {Name = "music CD", ProductType = ProductTypeEnum.Other, ShelfPrice = 12.49m}
+                new Product {ProductID = getNextProductID(), Name = "book", ProductType = ProductTypeEnum.Book, ShelfPrice = 12.49m},
+                new Product {ProductID = getNextProductID(), Name = "music CD", ProductType = ProductTypeEnum.Other, ShelfPrice = 12.49m}
             };
 
             var command = "";
@@ -50,6 +51,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                     return;
             }
 
+            Console.WriteLine();
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
             Console.Clear();
@@ -64,5 +66,16 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             
             Console.WriteLine("Finished listing products.");
         }
+
+        #region Support Methods
+
+        private static int getNextProductID()
+        {
+            _nextProductID++;
+            return _nextProductID;
+        }
+
+        #endregion
+
     }
 }

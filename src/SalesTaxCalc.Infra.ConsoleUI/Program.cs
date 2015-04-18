@@ -19,8 +19,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             _products = new List<Product>()
             {
-                new Product {ProductID = getNextProductID(), Name = "book", ProductType = ProductTypeEnum.Book, ShelfPrice = 12.49m},
-                new Product {ProductID = getNextProductID(), Name = "music CD", ProductType = ProductTypeEnum.Other, ShelfPrice = 12.49m}
+                createProduct("book", 12.49m, ProductTypeEnum.Book),
+                createProduct("music CD", 14.99m)
             };
 
             var command = "";
@@ -68,6 +68,11 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         }
 
         #region Support Methods
+
+        private static Product createProduct(string pName, decimal pShelfPrice, ProductTypeEnum pType = ProductTypeEnum.Other)
+        {
+            return new Product {ProductID = getNextProductID(), Name = pName, ProductType = pType, ShelfPrice = pShelfPrice};
+        }
 
         private static int getNextProductID()
         {

@@ -13,6 +13,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
     internal class Program
     {
         private const decimal baseSalesTaxValue = 0.1m;
+        private const decimal importTariffValue = .05m;
+
         private static List<Product> _products;
         private static int _nextProductID;
 
@@ -85,7 +87,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         private static Product createProduct
             (string pName, decimal pShelfPrice, bool pIsImported = false, ProductTypeEnum pType = ProductTypeEnum.Other)
         {
-            var assessedTaxValue = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
+            var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
+            var importTariffApplicable = pIsImported ? importTariffValue : 0m;
+            var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
             var product = new Product(getNextProductID(), pName, pShelfPrice) {ProductType = pType, TaxRateValue = assessedTaxValue};
             return product;
         }

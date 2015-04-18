@@ -6,6 +6,8 @@
 
 namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
 {
+    using System;
+
     /// <summary>
     /// Value type that represents a percent value of 100.
     /// </summary>
@@ -14,12 +16,12 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Percentage"/> class.
+        /// Initializes a new instance of the <see cref="Percentage" /> class.
         /// </summary>
         /// <param name="pValue">The integer value.</param>
         public Percentage(int pValue)
         {
-            Value = pValue;
+            Value = Convert.ToDecimal(pValue);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.PercentageTests.cs
-// Last Modified: 04/17/2015 9:01 PM
+// Last Modified: 04/17/2015 9:10 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -15,7 +15,7 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
     {
         [Test]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public void TenPercent_ShouldEqualOneTenth()
+        public void TenPercent_ActualValueShouldEqualOneTenth()
         {
             //arrange
             const decimal expectedActualValue = 0.1m;

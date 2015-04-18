@@ -9,6 +9,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Data;
 
     internal class Program
@@ -69,10 +70,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         private static void listProducts()
         {
             foreach (var product in _products)
-            {
-                Console.WriteLine("{0} - {1}", product.ProductID, product.GetNameWithPrice());
-            }
-            Console.WriteLine("Finished listing products.");
+                Console.WriteLine(product);
+
+            Console.WriteLine();
         }
 
         private static void shoppingCartMenu()

@@ -17,6 +17,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         private const decimal importTariffValue = .05m;
 
         private static List<Product> _products;
+        private static ShoppingCart _activeCart;
         private static int _nextProductID;
 
         private static void Main(string[] pArguments)
@@ -45,10 +46,42 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                 case "A":
                     addItemToCart();
                     break;
+                case "V":
+                    viewItemsInCart();
+                    break;
                 default:
                     Console.WriteLine("Unrecognized command '{0}'. Please try again.", pCommand);
                     return;
             }
+        }
+        
+        #region Input Command Processors
+
+        private static void productMenu()
+        {
+            var productMenu = new Dictionary<string, string>() { { "L", "List all products" } };
+            presentMenu("Products", productMenu, "X", processCommand);
+        }
+
+        private static void listProducts()
+        {
+            foreach (var product in _products)
+            {
+                Console.WriteLine("{0} - {1} at {2:C2}", product.ProductID, product.Name, product.ShelfPrice);
+            }
+            Console.WriteLine("Finished listing products.");
+        }
+
+        private static void shoppingCartMenu()
+        {
+            _activeCart = new ShoppingCart();
+            var shoppingCart = new Dictionary<string, string>()
+            {
+                {"A", "Add an item to the cart."},
+                {"V", "View items in cart."},
+                {"R", "View final receipt"}
+            };
+            presentMenu("Shopping Cart", shoppingCart, "X", processCommand);
         }
 
         private static void addItemToCart()
@@ -75,36 +108,19 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                         return;
                     }
 
+                    _activeCart.AddItem(product, 1);
                     Console.WriteLine("Added item '{0}' to your cart.", product.Name);
                 });
         }
 
-        #region Input Command Processors
-
-        private static void productMenu()
+        private static void viewItemsInCart()
         {
-            var productMenu = new Dictionary<string, string>() { { "L", "List all products" } };
-            presentMenu("Products", productMenu, "X", processCommand);
-        }
-
-        private static void listProducts()
-        {
-            foreach (var product in _products)
+            Console.WriteLine("{0} item{1} currently in cart:", _activeCart.Items.Count, _activeCart.Items.Count > 1 ? "s" : string.Empty);
+            foreach (var cartItem in _activeCart.Items)
             {
-                Console.WriteLine("{0} - {1} at {2:C2}", product.ProductID, product.Name, product.ShelfPrice);
+                Console.WriteLine("{0} {1}", 1, cartItem.Name);
             }
-            Console.WriteLine("Finished listing products.");
-        }
 
-        private static void shoppingCartMenu()
-        {
-            var shoppingCart = new Dictionary<string, string>()
-            {
-                {"A", "Add an item to the cart."},
-                {"V", "View items in cart."},
-                {"R", "View final receipt"}
-            };
-            presentMenu("Shopping Cart", shoppingCart, "X", processCommand);
         }
 
         #endregion

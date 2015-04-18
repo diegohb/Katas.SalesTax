@@ -1,11 +1,12 @@
 ﻿// *************************************************
 // SalesTaxCalc.Infra.ConsoleUI.ShoppingCart.cs
-// Last Modified: 04/18/2015 1:46 PM
+// Last Modified: 04/18/2015 4:05 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Infra.ConsoleUI.Data
 {
+    using System.Collections;
     using System.Collections.Generic;
 
     public class ShoppingCart
@@ -22,6 +23,11 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
         public ShoppingCart(IEnumerable<Product> pItems)
         {
             _items = new List<Product>(pItems);
+        }
+
+        public List<Product> Items
+        {
+            get { return (List<Product>) _items; }
         }
 
         #endregion

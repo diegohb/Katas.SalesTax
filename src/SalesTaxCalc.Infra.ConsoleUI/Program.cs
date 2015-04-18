@@ -144,8 +144,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var lineItemStrings = lineItems.Where(pItem => pItem.Quantity > 0)
                 .Select
                 (pItem => pItem.Quantity > 1
-                    ? string.Format("{0}: {1} ({2} @ {3})", pItem.Name, pItem.Total, pItem.Quantity, pItem.ShelfPrice)
-                    : string.Format("{0}: {1}", pItem.Name, pItem.Total));
+                    ? string.Format("{0}: {1:0.00} ({2} @ {3})", pItem.Name, pItem.Total, pItem.Quantity, pItem.ShelfPrice)
+                    : string.Format("{0}: {1:0.00}", pItem.Name, pItem.Total));
             Console.WriteLine(string.Join("\n", lineItemStrings));
 
             var salesTaxTotal = _activeCart.GetTotalSalesTax();
@@ -218,6 +218,8 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
             var importTariffApplicable = pIsImported ? importTariffValue : 0m;
             var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
+            //BUG: Product id 9 not calculating right...
+
             var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue };
             return product;
         }

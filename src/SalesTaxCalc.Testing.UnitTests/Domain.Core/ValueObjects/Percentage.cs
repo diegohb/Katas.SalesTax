@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.Percentage.cs
-// Last Modified: 04/17/2015 9:00 PM
+// Last Modified: 04/17/2015 9:05 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -35,6 +35,23 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
 
         #endregion
 
+        /// <summary>
+        /// Gets or sets the percentage value.
+        /// </summary>
+        /// <value>
+        /// The percentage value.
+        /// </value>
         public decimal PercentageValue { get; set; }
+
+        /// <summary>
+        /// Gets the actual value.
+        /// </summary>
+        /// <value>
+        /// The actual value is the <see cref="PercentageValue" /> divided by 100.
+        /// </value>
+        public decimal ActualValue
+        {
+            get { return PercentageValue/100m; }
+        }
     }
 }

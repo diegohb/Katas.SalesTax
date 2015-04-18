@@ -49,6 +49,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                 case "V":
                     viewItemsInCart();
                     break;
+                case "R":
+                    printReceipt();
+                    break;
                 default:
                     Console.WriteLine("Unrecognized command '{0}'. Please try again.", pCommand);
                     return;
@@ -136,6 +139,19 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         private static void printReceipt()
         {
             ensureActiveCartIsInitialized();
+
+            var lines = _activeCart.GetLineItems();
+            foreach (var lineItem in lines)
+            {
+                Console.WriteLine("{0}: {1} ({2} @ {3})", lineItem.Name, lineItem.Total, lineItem.Quantity, lineItem.ShelfPrice);
+            }
+            var salesTaxTotal = _activeCart.GetTotalSalesTax();
+            var grandTotal = _activeCart.GetGrandTotal();
+            Console.WriteLine("Sales Taxes: {0:C2}", salesTaxTotal);
+            Console.WriteLine("Total: {0:C2}", grandTotal);
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
         }
 
         #endregion

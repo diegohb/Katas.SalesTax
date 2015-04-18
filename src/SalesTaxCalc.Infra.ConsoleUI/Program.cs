@@ -23,10 +23,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             initializeInventory();
 
-            var command = "";
-
             var mainMenu = new Dictionary<string, string>() { { "P", "Products" }, { "N", "New Shopping Cart" } };
-            presentMenu(mainMenu, "x", processCommand);
+            presentMenu("Main Menu", mainMenu, "X", processCommand);
+            Console.WriteLine();
             Console.WriteLine("Thank you, come again...");
         }
 
@@ -47,23 +46,14 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                     Console.WriteLine("Unrecognized command '{0}'. Please try again.", pCommand);
                     return;
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue.");
-            Console.ReadKey();
-            Console.Clear();
         }
 
         #region Input Command Processors
 
         private static void productMenu()
         {
-            Console.Clear();
-            Console.WriteLine("PRODUCTS");
-
-            var productMenu = new Dictionary<string, string>() {{"L", "List all products"}};
-            presentMenu(productMenu, "", processCommand);
-
+            var productMenu = new Dictionary<string, string>() { { "L", "List all products" } };
+            presentMenu("Products", productMenu, "X", processCommand);
         }
 
         private static void listProducts()
@@ -72,34 +62,48 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             {
                 Console.WriteLine("{0} - {1} at {2:C2}", product.ProductID, product.Name, product.ShelfPrice);
             }
-
             Console.WriteLine("Finished listing products.");
         }
 
         private static void shoppingCartMenu()
         {
-            Console.Clear();
-            Console.WriteLine("Quick Checkout");
+            var shoppingCart = new Dictionary<string, string>()
+            {
+                {"A", "Add an item to the cart."},
+                {"V", "View items in cart."},
+                {"R", "View final receipt"}
+            };
+            presentMenu("Shopping Cart", shoppingCart, "X", processCommand);
         }
 
         #endregion
 
         #region Support Methods
 
-        private static void presentMenu(Dictionary<string, string> pMenu, string pExitCmd, Action<string> pMenuCommandHandler)
+        private static void presentMenu(string pMenuTitle, Dictionary<string, string> pMenu, string pExitCmd, Action<string> pMenuCommandHandler)
         {
-            var command = "";
-            while (!command.Equals(pExitCmd, StringComparison.CurrentCultureIgnoreCase))
+            Console.Clear();
+            string command;
+            do
             {
+                Console.WriteLine();
+                Console.WriteLine(pMenuTitle.ToUpper());
+                Console.WriteLine("***********************");
+
                 foreach (var menuItem in pMenu)
                     Console.WriteLine("[{0}] {1}", menuItem.Key, menuItem.Value);
 
                 Console.WriteLine("[{0}] Exit", pExitCmd);
-
+                Console.WriteLine();
+                Console.Write("Choice> ");
                 command = Console.ReadLine() ?? "";
+                Console.WriteLine();
+
                 if (pMenu.Select(pItem => pItem.Key).Any(pItem => pItem.Equals(command, StringComparison.CurrentCultureIgnoreCase)))
                     pMenuCommandHandler.Invoke(command.ToUpper());
-            }
+            } while (!command.Equals(pExitCmd, StringComparison.CurrentCultureIgnoreCase));
+
+            Console.Clear();
         }
 
         private static void initializeInventory()

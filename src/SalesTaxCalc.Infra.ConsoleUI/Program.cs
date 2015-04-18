@@ -89,9 +89,9 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             Console.WriteLine("Choose an item to add your cart.");
             var menu = _products.ToDictionary(p => p.ProductID.ToString(), p => p.Name);
             presentMenu
-                ("Add items to cart", menu, "0", pMenuItem =>
+                ("Add items to cart", menu, "x", pMenuItem =>
                 {
-                    if (pMenuItem.Equals("0"))
+                    if (pMenuItem.Equals("X"))
                         return;
 
                     int productID;
@@ -108,8 +108,15 @@ namespace SalesTaxCalc.Infra.ConsoleUI
                         return;
                     }
 
-                    _activeCart.AddItem(product, 1);
-                    Console.WriteLine("Added item '{0}' to your cart.", product.Name);
+                    Console.Write("How many '{0}' would you like to add? ", product.Name);
+                    int quantity;
+                    if (int.TryParse(Console.ReadLine(), out quantity))
+                    {
+                        _activeCart.AddItem(product, quantity);
+                        Console.WriteLine("Added {0} '{1}' item{2} to your cart.", quantity, product.Name, quantity > 1 ? "s" : string.Empty);
+                    }
+                    else
+                        Console.WriteLine("Invalid quantity value. Select a product again.");
                 });
         }
 

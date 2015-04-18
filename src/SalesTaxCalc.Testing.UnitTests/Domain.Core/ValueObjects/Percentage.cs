@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.Percentage.cs
-// Last Modified: 04/17/2015 8:44 PM
+// Last Modified: 04/17/2015 8:54 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -11,6 +11,8 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
     /// </summary>
     public class Percentage : IValueObject
     {
+        #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Percentage"/> class.
         /// </summary>
@@ -19,6 +21,17 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         {
             Value = pValue;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Percentage"/> class.
+        /// </summary>
+        /// <param name="pValue">The decimal value.</param>
+        public Percentage(decimal pValue)
+        {
+            Value = pValue;
+        }
+
+        #endregion
 
         public decimal Value { get; set; }
     }

@@ -19,9 +19,10 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
         {
             //arrange
             const decimal expectedValue = 0.1m;
+            const decimal testPercentageValue = 10m;
 
             //act
-            var tenPercent = new Percentage(10); //the ctor is the action.
+            var tenPercent = new Percentage(testPercentageValue); //the ctor is the action.
 
             //assert
             Assert.AreEqual(expectedValue, tenPercent.Value);

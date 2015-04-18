@@ -71,7 +71,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         #region Value Equality
 
         /// <summary>
-        /// Equalses the specified p other percentage.
+        /// Determines equality with the other specified <see cref="Percentage"/> object.
         /// </summary>
         /// <param name="pOtherPercentage">The other percentage object.</param>
         /// <returns><c>true</c> if are equal value.</returns>

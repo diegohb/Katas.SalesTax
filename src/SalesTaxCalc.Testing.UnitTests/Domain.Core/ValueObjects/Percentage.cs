@@ -63,5 +63,19 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
              */
             return ActualValue.ToString("P2");
         }
+
+        public override int GetHashCode()
+        {
+            return PercentageValue.GetHashCode();
+        }
+
+        public override bool Equals(object pOtherObject)
+        {
+            var percentageObj = pOtherObject as Percentage;
+            if (percentageObj == null)
+                return false;
+
+            return PercentageValue.Equals(percentageObj.PercentageValue);
+        }
     }
 }

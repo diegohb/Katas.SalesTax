@@ -12,9 +12,21 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
     [TestFixture]
     public class TaxRateTests
     {
+        private TaxRate _basicSalesTax = new TaxRate(10);
+        private TaxRate _importTaxRate = new TaxRate(5);
+
         [Test]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public void BasicSalesTax_ShouldBeTenPercent()
+        {
+            //arrange
+            //act
+            //assert
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void ImportSalesTax_ShouldBeFivePercent()
         {
             //arrange
             //act

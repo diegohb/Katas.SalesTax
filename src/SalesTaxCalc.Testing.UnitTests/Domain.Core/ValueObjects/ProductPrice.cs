@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.ProductPrice.cs
-// Last Modified: 04/20/2015 9:57 AM
+// Last Modified: 04/20/2015 10:30 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -57,10 +57,16 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         /// Gets the rounded total.
         /// </summary>
         /// <returns>The <see cref="TrueTotal"/> value with rounding logic applied.</returns>
-        public decimal GetRoundedTotal()
+        public decimal GetRoundedTotal(IRoundingStrategy pRoundingStrategy)
         {
-            //ref: http://stackoverflow.com/a/1448465/1240322
-            return Math.Ceiling(TrueTotal*20)/20;
+            try
+            {
+                return pRoundingStrategy.GetRoundedValue(TrueTotal);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException(string.Format("Failed to apply rounding strategy to value '{0:0.00}'", TrueTotal), e);
+            }
         }
 
         #region Equality Members
@@ -133,6 +139,5 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         }
 
         #endregion
-
     }
 }

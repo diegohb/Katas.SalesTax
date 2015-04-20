@@ -1,13 +1,13 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.ProductPriceTests.cs
-// Last Modified: 04/20/2015 9:53 AM
+// Last Modified: 04/20/2015 10:30 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
+    using Domain.Core.Impl;
     using Domain.Core.ValueObjects;
     using NUnit.Framework;
 
@@ -47,18 +47,20 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
 
         [Test]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public void ProductPrice_GetRoundedTotalShouldReturnTrueTotalRoundedToOneTwentieth()
+        public void ProductPrice_GetRoundedTotalShouldReturnTrueTotalRoundedToOneTwentiethPerStrategy()
         {
             //ARRANGE
+            var roundingStrategy = new RoundUpToNearestOneTwentiethRoundingRule();
             const decimal expectedTrueTotal = basePrice + (basePrice*taxRate);
-            var expectedRoundedTotal = roundToNearestOneTwentieth(expectedTrueTotal);
+            var expectedRoundedTotal = roundingStrategy.GetRoundedValue(expectedTrueTotal);
 
             //ACT
             var productPrice = new ProductPrice(basePrice, taxRate);
 
             //ASSERT
             Assert.AreEqual(expectedTrueTotal, productPrice.TrueTotal);
-            Assert.AreEqual(expectedRoundedTotal, productPrice.GetRoundedTotal());
+
+            Assert.AreEqual(expectedRoundedTotal, productPrice.GetRoundedTotal(roundingStrategy));
         }
 
         [Test]
@@ -78,15 +80,9 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
             Assert.IsFalse(productPriceUnderTest.Equals(differentProducPrice));
             Assert.IsTrue(productPriceUnderTest == expectedProductPrice);
             Assert.IsFalse(productPriceUnderTest == differentProducPrice);
-            
+
             Assert.IsTrue(expectedProductPrice.Equals(copyRef));
             Assert.AreEqual(expectedProductPrice, copyRef);
-        }
-
-        private decimal roundToNearestOneTwentieth(decimal pValue)
-        {
-            //ref: http://stackoverflow.com/a/1448465/1240322
-            return Math.Ceiling(pValue*20)/20;
         }
     }
 }

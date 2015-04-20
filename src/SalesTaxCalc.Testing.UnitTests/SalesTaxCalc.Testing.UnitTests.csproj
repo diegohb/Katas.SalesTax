@@ -44,6 +44,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain.Core\Impl\RoundUpToNearestOneTwentiethRoundingRule.cs" />
+    <Compile Include="Domain.Core\IRoundingStrategy.cs" />
     <Compile Include="Domain.Core\ValueObjects\IValueObject.cs" />
     <Compile Include="Domain.Core\ValueObjects\ProductPrice.cs" />
     <Compile Include="Utility.cs" />

@@ -44,16 +44,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain.Core\Impl\RoundUpToNearestOneTwentiethRoundingRule.cs" />
+    <Compile Include="Domain.Core\IRoundingStrategy.cs" />
     <Compile Include="Domain.Core\ValueObjects\IValueObject.cs" />
+    <Compile Include="Domain.Core\ValueObjects\Percentage.cs" />
+    <Compile Include="Domain.Core\ValueObjects\ProductPrice.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjectTests\PercentageTests.cs" />
+    <Compile Include="ValueObjectTests\TaxRateTests.cs" />
+    <Compile Include="ValueObjectTests\ProductPriceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ValueObjectTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

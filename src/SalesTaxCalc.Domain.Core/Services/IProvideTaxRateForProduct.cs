@@ -6,8 +6,10 @@
 
 namespace SalesTaxCalc.Domain.Core.Services
 {
+    using ValueObjects;
+
     public interface IProvideTaxRateForProduct
     {
-        decimal GetApplicableTaxRateForProduct(bool pIsExempt, bool pIsImported);
+        Percentage GetApplicableTaxRateForProduct(bool pIsExempt, bool pIsImported);
     }
 }

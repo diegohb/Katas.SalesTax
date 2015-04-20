@@ -1,12 +1,11 @@
 ﻿// *************************************************
 // SalesTaxCalc.Domain.Core.TaxRateAssesor.cs
-// Last Modified: 04/20/2015 6:46 PM
+// Last Modified: 04/20/2015 6:54 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Domain.Core.Impl
 {
-    using System;
     using Services;
     using ValueObjects;
 
@@ -21,9 +20,17 @@ namespace SalesTaxCalc.Domain.Core.Impl
             _importTaxTariff = pImportTariff;
         }
 
-        public decimal GetApplicableTaxRateForProduct(bool pIsExempt, bool pIsImported)
+        public Percentage GetApplicableTaxRateForProduct(bool pIsExempt, bool pIsImported)
         {
-            throw new NotImplementedException();
+            var rate = new Percentage(0);
+
+            if (!pIsExempt)
+                rate = _basicSalesTax;
+
+            if (pIsImported)
+                rate += _importTaxTariff;
+
+            return rate;
         }
     }
 }

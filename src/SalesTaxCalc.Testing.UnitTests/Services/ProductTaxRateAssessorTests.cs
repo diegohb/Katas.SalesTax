@@ -16,11 +16,15 @@ namespace SalesTaxCalc.Testing.UnitTests.Services
     public class ProductTaxRateAssessorTests
     {
         private IProvideTaxRateForProduct _taxRateAssesor;
+        private Percentage _baseSalesTax;
+        private Percentage _importTariff;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            _taxRateAssesor = new TaxRateAssesor(new Percentage(10), new Percentage(5));
+            _baseSalesTax = new Percentage(10);
+            _importTariff = new Percentage(5);
+            _taxRateAssesor = new TaxRateAssesor(_baseSalesTax, _importTariff);
         }
 
         [Test]
@@ -28,10 +32,52 @@ namespace SalesTaxCalc.Testing.UnitTests.Services
         public void TaxRateAssessor_ShouldReturnNonExemptTaxRate()
         {
             //ARRANGE
-            const decimal expectedRate = 0.10m;
+            var expectedRate = _baseSalesTax;
 
             //ACT
             var actualRate = _taxRateAssesor.GetApplicableTaxRateForProduct(false, false);
+
+            //ASSERT
+            Assert.AreEqual(expectedRate, actualRate);
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void TaxRateAssessor_ShouldReturnExemptTaxRate()
+        {
+            //ARRANGE
+            var expectedRateValue = new Percentage(0);
+
+            //ACT
+            var actualRate = _taxRateAssesor.GetApplicableTaxRateForProduct(true, false);
+
+            //ASSERT
+            Assert.AreEqual(expectedRateValue, actualRate);
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void TaxRateAssessor_ShouldReturnExemptTaxRatePlusImportTariff()
+        {
+            //ARRANGE
+            var expectedRate = _importTariff;
+
+            //ACT
+            var actualRate = _taxRateAssesor.GetApplicableTaxRateForProduct(true, true);
+
+            //ASSERT
+            Assert.AreEqual(expectedRate, actualRate);
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void TaxRateAssessor_ShouldReturnNonExemptTaxRatePlusImportTariff()
+        {
+            //ARRANGE
+            var expectedRate = _baseSalesTax + _importTariff;
+
+            //ACT
+            var actualRate = _taxRateAssesor.GetApplicableTaxRateForProduct(false, true);
 
             //ASSERT
             Assert.AreEqual(expectedRate, actualRate);

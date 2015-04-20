@@ -82,7 +82,9 @@ namespace SalesTaxCalc.Domain.Core.ValueObjects
         /// <returns><c>true</c> if are equal value.</returns>
         public bool Equals(Percentage pOtherPercentage)
         {
-            return pOtherPercentage != null && PercentageValue.Equals(pOtherPercentage.PercentageValue);
+            if (ReferenceEquals(null, pOtherPercentage)) return false;
+            if (ReferenceEquals(this, pOtherPercentage)) return true;
+            return _percentageValue == pOtherPercentage._percentageValue;
         }
 
         /// <summary>
@@ -93,7 +95,7 @@ namespace SalesTaxCalc.Domain.Core.ValueObjects
         /// </returns>
         public override int GetHashCode()
         {
-            return PercentageValue.GetHashCode();
+            return _percentageValue.GetHashCode();
         }
 
         /// <summary>
@@ -105,13 +107,48 @@ namespace SalesTaxCalc.Domain.Core.ValueObjects
         /// </returns>
         public override bool Equals(object pOtherObject)
         {
-            var percentageObj = pOtherObject as Percentage;
-            if (percentageObj == null)
-                return false;
+            if (ReferenceEquals(null, pOtherObject)) return false;
+            if (ReferenceEquals(this, pOtherObject)) return true;
+            if (pOtherObject.GetType() != this.GetType()) return false;
+            return Equals((Percentage) pOtherObject);
+        }
 
-            return PercentageValue.Equals(percentageObj.PercentageValue);
+        public static bool operator ==(Percentage pLeft, Percentage pRight)
+        {
+            return Equals(pLeft, pRight);
+        }
+
+        public static bool operator !=(Percentage pLeft, Percentage pRight)
+        {
+            return !Equals(pLeft, pRight);
         }
 
         #endregion
+
+        /// <summary>
+        /// Implements the operator +.
+        /// </summary>
+        /// <param name="pLeft">The left.</param>
+        /// <param name="pRight">The right.</param>
+        /// <returns>
+        /// The resultant <see cref="Percentage"/> object with values added.
+        /// </returns>
+        public static Percentage operator +(Percentage pLeft, Percentage pRight)
+        {
+            return new Percentage(pLeft.PercentageValue + pRight.PercentageValue);
+        }
+
+        /// <summary>
+        /// Implements the operator -.
+        /// </summary>
+        /// <param name="pLeft">The left.</param>
+        /// <param name="pRight">The right.</param>
+        /// <returns>
+        /// The resultant <see cref="Percentage"/> object with values subtracted.
+        /// </returns>
+        public static Percentage operator -(Percentage pLeft, Percentage pRight)
+        {
+            return new Percentage(pLeft.PercentageValue - pRight.PercentageValue);
+        }
     }
 }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain.Core\ValueObjects\IValueObject.cs" />
+    <Compile Include="Domain.Core\ValueObjects\ProductPrice.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjectTests\ProductPriceTests.cs" />

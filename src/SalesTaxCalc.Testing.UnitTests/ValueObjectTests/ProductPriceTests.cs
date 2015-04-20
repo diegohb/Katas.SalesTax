@@ -1,12 +1,13 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.ProductPriceTests.cs
-// Last Modified: 04/20/2015 9:35 AM
+// Last Modified: 04/20/2015 9:38 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
 {
     using System.Diagnostics.CodeAnalysis;
+    using Domain.Core.ValueObjects;
     using NUnit.Framework;
 
     [TestFixture]

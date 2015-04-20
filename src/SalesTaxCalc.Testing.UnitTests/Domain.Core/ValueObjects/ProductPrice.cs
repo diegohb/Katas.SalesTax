@@ -11,7 +11,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
     /// <summary>
     /// Represents the base price, tax amount, and total values of a single product. 
     /// </summary>
-    public class ProductPrice : IValueObject
+    public class ProductPrice : IValueObject, IEquatable<ProductPrice>
     {
         private readonly decimal _basePrice;
         private readonly decimal _taxRate;
@@ -62,5 +62,77 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
             //ref: http://stackoverflow.com/a/1448465/1240322
             return Math.Ceiling(TrueTotal*20)/20;
         }
+
+        #region Equality Members
+
+        /// <summary>
+        /// Equalses the specified other.
+        /// </summary>
+        /// <param name="pOther">The other.</param>
+        /// <returns></returns>
+        public bool Equals(ProductPrice pOther)
+        {
+            if (ReferenceEquals(null, pOther)) return false;
+            if (ReferenceEquals(this, pOther)) return true;
+            return _basePrice == pOther._basePrice && _taxRate == pOther._taxRate;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="pObj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool Equals(object pObj)
+        {
+            if (ReferenceEquals(null, pObj)) return false;
+            if (ReferenceEquals(this, pObj)) return true;
+            if (pObj.GetType() != typeof (ProductPrice)) return false;
+            return Equals((ProductPrice) pObj);
+        }
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (_basePrice.GetHashCode()*397) ^ _taxRate.GetHashCode();
+            }
+        }
+
+        /// <summary>
+        /// Implements the operator ==.
+        /// </summary>
+        /// <param name="pLeft">The left.</param>
+        /// <param name="pRight">The right.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator ==(ProductPrice pLeft, ProductPrice pRight)
+        {
+            return Equals(pLeft, pRight);
+        }
+
+        /// <summary>
+        /// Implements the operator !=.
+        /// </summary>
+        /// <param name="pLeft">The left.</param>
+        /// <param name="pRight">The right.</param>
+        /// <returns>
+        /// The result of the operator.
+        /// </returns>
+        public static bool operator !=(ProductPrice pLeft, ProductPrice pRight)
+        {
+            return !Equals(pLeft, pRight);
+        }
+
+        #endregion
+
     }
 }

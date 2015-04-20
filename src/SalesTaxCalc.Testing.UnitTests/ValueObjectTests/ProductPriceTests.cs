@@ -61,6 +61,28 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
             Assert.AreEqual(expectedRoundedTotal, productPrice.GetRoundedTotal());
         }
 
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void ProductPrice_EqualProductPriceObjectsShouldReturnEqualityTrue()
+        {
+            //ARRANGE
+            var productPriceUnderTest = new ProductPrice(basePrice, taxRate);
+
+            //ACT
+            var expectedProductPrice = new ProductPrice(basePrice, taxRate);
+            var differentProducPrice = new ProductPrice(basePrice, 0.1m);
+            var copyRef = expectedProductPrice;
+
+            //ASSERT
+            Assert.IsTrue(productPriceUnderTest.Equals(expectedProductPrice));
+            Assert.IsFalse(productPriceUnderTest.Equals(differentProducPrice));
+            Assert.IsTrue(productPriceUnderTest == expectedProductPrice);
+            Assert.IsFalse(productPriceUnderTest == differentProducPrice);
+            
+            Assert.IsTrue(expectedProductPrice.Equals(copyRef));
+            Assert.AreEqual(expectedProductPrice, copyRef);
+        }
+
         private decimal roundToNearestOneTwentieth(decimal pValue)
         {
             //ref: http://stackoverflow.com/a/1448465/1240322

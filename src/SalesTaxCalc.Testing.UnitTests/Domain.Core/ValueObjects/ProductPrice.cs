@@ -1,6 +1,6 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.ProductPrice.cs
-// Last Modified: 04/20/2015 9:38 AM
+// Last Modified: 04/20/2015 9:45 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
@@ -20,6 +20,11 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         public decimal TaxAmount
         {
             get { return _basePrice*_taxRate; }
+        }
+
+        public decimal TrueTotal
+        {
+            get { return _basePrice + TaxAmount; }
         }
     }
 }

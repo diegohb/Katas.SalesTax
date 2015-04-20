@@ -13,13 +13,14 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
     [TestFixture]
     public class ProductPriceTests
     {
+        private const decimal basePrice = 11.85m;
+        private const decimal taxRate = 0.15m;
+
         [Test]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         public void ProductPrice_TaxAmountShouldEquateToBasePriceMultipliedByTaxRate()
         {
             //ARRANGE
-            const decimal basePrice = 11.85m;
-            const decimal taxRate = 0.15m;
             const decimal expectedTaxAmount = basePrice*taxRate;
 
             //ACT
@@ -27,6 +28,20 @@ namespace SalesTaxCalc.Testing.UnitTests.ValueObjectTests
 
             //ASSERT
             Assert.AreEqual(expectedTaxAmount, productPrice.TaxAmount);
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void ProductPrice_TrueTotalShouldEquateToBaseMultipliedByTaxAddedToBase()
+        {
+            //ARRANGE
+            const decimal expectedTrueTotal = basePrice + (basePrice*taxRate);
+
+            //ACT
+            var productPrice = new ProductPrice(basePrice, taxRate);
+
+            //ASSERT
+            Assert.AreEqual(expectedTrueTotal, productPrice.TrueTotal);
         }
     }
 }

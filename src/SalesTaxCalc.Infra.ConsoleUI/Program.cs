@@ -218,7 +218,6 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
             var importTariffApplicable = pIsImported ? importTariffValue : 0m;
             var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
-            //BUG: Product id 9 not calculating right...
 
             var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue };
             return product;

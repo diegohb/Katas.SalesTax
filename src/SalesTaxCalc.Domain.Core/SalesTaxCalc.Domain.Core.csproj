@@ -41,6 +41,7 @@
     <Compile Include="Impl\RoundUpToNearestOneTwentiethRoundingRule.cs" />
     <Compile Include="Impl\TaxRateAssesor.cs" />
     <Compile Include="IRoundingStrategy.cs" />
+    <Compile Include="ProductCategoryEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IProvideTaxRateForProduct.cs" />
     <Compile Include="ValueObjects\IValueObject.cs" />

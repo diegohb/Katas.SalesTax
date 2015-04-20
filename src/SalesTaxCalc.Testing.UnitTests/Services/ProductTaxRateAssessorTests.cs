@@ -7,6 +7,7 @@
 namespace SalesTaxCalc.Testing.UnitTests.Services
 {
     using System.Diagnostics.CodeAnalysis;
+    using Domain.Core;
     using Domain.Core.Impl;
     using Domain.Core.Services;
     using Domain.Core.ValueObjects;
@@ -81,6 +82,19 @@ namespace SalesTaxCalc.Testing.UnitTests.Services
 
             //ASSERT
             Assert.AreEqual(expectedRate, actualRate);
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public void TaxRateAssessor_IsExemptShouldReturnTrueForExemptTypes()
+        {
+            //ARRANGE
+            var exemptTypes = new[] {ProductCategoryEnum.Books, ProductCategoryEnum.Food, ProductCategoryEnum.Medical};
+
+            //ASSERT
+            foreach (var productType in exemptTypes)
+                Assert.IsTrue(_taxRateAssesor.IsProductCategoryExemptFromBaseTax(productType));
+            Assert.IsFalse(_taxRateAssesor.IsProductCategoryExemptFromBaseTax(ProductCategoryEnum.Other));
         }
     }
 }

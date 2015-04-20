@@ -1,11 +1,13 @@
 ﻿// *************************************************
 // SalesTaxCalc.Testing.UnitTests.ProductPrice.cs
-// Last Modified: 04/20/2015 9:45 AM
+// Last Modified: 04/20/2015 9:53 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
 {
+    using System;
+
     public class ProductPrice : IValueObject
     {
         private readonly decimal _basePrice;
@@ -25,6 +27,12 @@ namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
         public decimal TrueTotal
         {
             get { return _basePrice + TaxAmount; }
+        }
+
+        public decimal GetRoundedTotal()
+        {
+            //ref: http://stackoverflow.com/a/1448465/1240322
+            return Math.Ceiling(TrueTotal*20)/20;
         }
     }
 }

@@ -41,15 +41,14 @@ namespace SalesTaxCalc.Infra.ConsoleUI.Data
 
         public IEnumerable<ReceiptLineItem> GetLineItems()
         {
-
-            //BUG: for test case 3, sales tax sum is incorrect.
             return from item in _items
                 group item.ProductID by item
                 into prodGroup
+                let taxAmount = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*prodGroup.Key.ShelfPrice)
                 let quantity = prodGroup.Count()
-                let shelfPriceWithTax = prodGroup.Key.ShelfPrice + roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*prodGroup.Key.ShelfPrice)
+                let shelfPriceWithTax = prodGroup.Key.ShelfPrice + taxAmount
                 let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity
-                let taxTotal = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*shelfPriceTotal)
+                let taxTotal = taxAmount*quantity
                 select
                     new ReceiptLineItem
                         (prodGroup.Key.ProductID, prodGroup.Key.Name, quantity, taxTotal,

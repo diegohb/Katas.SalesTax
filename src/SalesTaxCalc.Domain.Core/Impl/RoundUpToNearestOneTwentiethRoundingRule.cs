@@ -1,17 +1,17 @@
 ﻿// *************************************************
-// SalesTaxCalc.Testing.UnitTests.RoundUpToNearestOneTwentiethRoundingRule.cs
-// Last Modified: 04/20/2015 10:30 AM
+// SalesTaxCalc.Domain.Core.RoundUpToNearestOneTwentiethRoundingRule.cs
+// Last Modified: 04/20/2015 11:03 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
-namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.Impl
+namespace SalesTaxCalc.Domain.Core.Impl
 {
     using System;
 
     /// <summary>
     /// Applies rounding up from precise value to nearest 0.05.
     /// </summary>
-    internal class RoundUpToNearestOneTwentiethRoundingRule : IRoundingStrategy
+    public class RoundUpToNearestOneTwentiethRoundingRule : IRoundingStrategy
     {
         public decimal GetRoundedValue(decimal pPreciseValue)
         {

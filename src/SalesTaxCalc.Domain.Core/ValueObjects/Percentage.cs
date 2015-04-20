@@ -1,10 +1,10 @@
 ﻿// *************************************************
-// SalesTaxCalc.Testing.UnitTests.Percentage.cs
-// Last Modified: 04/17/2015 10:54 PM
+// SalesTaxCalc.Domain.Core.Percentage.cs
+// Last Modified: 04/20/2015 11:03 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
-namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
+namespace SalesTaxCalc.Domain.Core.ValueObjects
 {
     using System;
 

@@ -1,10 +1,10 @@
 ﻿// *************************************************
-// SalesTaxCalc.Testing.UnitTests.IValueObject.cs
-// Last Modified: 04/17/2015 9:51 PM
+// SalesTaxCalc.Domain.Core.IValueObject.cs
+// Last Modified: 04/20/2015 11:03 AM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
-namespace SalesTaxCalc.Testing.UnitTests.Domain.Core.ValueObjects
+namespace SalesTaxCalc.Domain.Core.ValueObjects
 {
     /// <summary>
     ///     Marker interface for all value objects.

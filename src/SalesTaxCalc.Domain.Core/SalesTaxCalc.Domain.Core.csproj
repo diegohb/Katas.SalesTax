@@ -39,8 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\RoundUpToNearestOneTwentiethRoundingRule.cs" />
+    <Compile Include="Impl\TaxRateAssesor.cs" />
     <Compile Include="IRoundingStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IProvideTaxRateForProduct.cs" />
     <Compile Include="ValueObjects\IValueObject.cs" />
     <Compile Include="ValueObjects\Percentage.cs" />
     <Compile Include="ValueObjects\ProductPrice.cs" />

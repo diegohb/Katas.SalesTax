@@ -4,8 +4,6 @@
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
-using SalesTaxCalc.Domain.Core.Services;
-
 namespace SalesTaxCalc.Domain.Core.Data
 {
     public class Product
@@ -20,7 +18,6 @@ namespace SalesTaxCalc.Domain.Core.Data
         public int ProductID { get; private set; }
         public string Name { get; private set; }
         public decimal ShelfPrice { get; private set; }
-
         public bool IsImported { get; set; }
         public ProductCategoryEnum ProductType { get; set; }
 
@@ -32,7 +29,7 @@ namespace SalesTaxCalc.Domain.Core.Data
         public override string ToString()
         {
             return string.Format
-                ("ProductID: {0}, Name: {1}, ShelfPrice: {2}, ProductType: {4}", ProductID, Name, ShelfPrice, ProductType);
+                ("ProductID: {0}, Name: {1}, ShelfPrice: {2}, ProductType: {3}", ProductID, Name, ShelfPrice, ProductType);
         }
     }
 }

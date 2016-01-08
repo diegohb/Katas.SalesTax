@@ -6,12 +6,11 @@
 
 namespace SalesTaxCalc.Domain.Core.Data
 {
-  using Services;
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
+    using Services;
+    using System.Collections.Generic;
+    using System.Linq;
 
-  public class ShoppingCart
+    public class ShoppingCart
     {
         private readonly IList<Product> _items;
         private readonly IProvideTaxRateForProduct _taxAssessor;

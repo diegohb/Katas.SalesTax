@@ -218,7 +218,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var importTariffApplicable = pIsImported ? importTariffValue : 0m;
             var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
 
-            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue };
+            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue, IsImported = pIsImported };
             return product;
         }
 

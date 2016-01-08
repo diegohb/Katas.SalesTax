@@ -18,6 +18,7 @@ namespace SalesTaxCalc.Domain.Core.Data
         public int ProductID { get; private set; }
         public string Name { get; private set; }
         public decimal ShelfPrice { get; private set; }
+        public bool IsImported { get; set; }
         public decimal TaxRateValue { get; set; }
         public ProductTypeEnum ProductType { get; set; }
 

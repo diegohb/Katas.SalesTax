@@ -66,6 +66,16 @@ namespace SalesTaxCalc.Domain.Core.Data
             get { return _total; }
         }
 
+        public string PrintableMessage
+        {
+            get
+            {
+                return Quantity > 1
+                    ? string.Format("{0}: {1:0.00} ({2} @ {3})", Name, Total, Quantity, ShelfPrice)
+                    : string.Format("{0}: {1:0.00}", Name, Total);
+            }
+        }
+
         public override string ToString()
         {
             var builder = new StringBuilder();

@@ -147,9 +147,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
             var lineItems = _activeCart.GetLineItems();
             var lineItemStrings = lineItems.Where(pItem => pItem.Quantity > 0)
                 .Select
-                (pItem => pItem.Quantity > 1
-                    ? string.Format("{0}: {1:0.00} ({2} @ {3})", pItem.Name, pItem.Total, pItem.Quantity, pItem.ShelfPrice)
-                    : string.Format("{0}: {1:0.00}", pItem.Name, pItem.Total));
+                (pItem => pItem.PrintableMessage);
             Console.WriteLine(string.Join("\n", lineItemStrings));
 
             var salesTaxTotal = _activeCart.GetTotalSalesTax();

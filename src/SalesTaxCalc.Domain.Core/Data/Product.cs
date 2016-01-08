@@ -1,6 +1,6 @@
 ﻿// *************************************************
-// SalesTaxCalc.Infra.ConsoleUI.Product.cs
-// Last Modified: 04/18/2015 5:32 PM
+// SalesTaxCalc.Domain.Core.Product.cs
+// Last Modified: 01/08/2016 2:40 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 

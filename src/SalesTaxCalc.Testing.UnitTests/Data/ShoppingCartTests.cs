@@ -14,6 +14,8 @@ namespace SalesTaxCalc.Testing.UnitTests.Data
     {
         List<Product> _products;
         IProvideTaxRateForProduct taxAssessor;
+        private static IRoundingStrategy _roundingStrategy;
+
         private Product createProduct(int id, string pName, decimal pShelfPrice, bool pIsImported = false, ProductCategoryEnum pType = ProductCategoryEnum.Other)
         {
             var product = new Product(id, pName, pShelfPrice) { ProductType = pType, IsImported = pIsImported };
@@ -45,12 +47,13 @@ namespace SalesTaxCalc.Testing.UnitTests.Data
                 createProduct(id++,"box of imported chocolates", 11.25m, true, ProductCategoryEnum.Food)
             };
             taxAssessor = new TaxRateAssesor(new Percentage(10), new Percentage(5));
+            _roundingStrategy = new RoundUpToNearestOneTwentiethRoundingRule();
         }
 
         [Test]
         public void TestScenario1()
         {
-            var cart = new ShoppingCart(taxAssessor);
+            var cart = new ShoppingCart(taxAssessor, _roundingStrategy);
             cart.AddItem(getProduct("book"), 2);
             cart.AddItem(getProduct("music CD"), 1);
             cart.AddItem(getProduct("chocolate bar"), 1);
@@ -66,7 +69,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Data
         [Test]
         public void TestScenario2()
         {
-            var cart = new ShoppingCart(taxAssessor);
+            var cart = new ShoppingCart(taxAssessor, _roundingStrategy);
             cart.AddItem(getProduct("imported box of chocolates"), 1);
             cart.AddItem(getProduct("imported bottle of perfume", 47.50m), 1);
             var items = cart.GetLineItems().ToList();
@@ -80,7 +83,7 @@ namespace SalesTaxCalc.Testing.UnitTests.Data
         [Test]
         public void TestScenario3()
         {
-            var cart = new ShoppingCart(taxAssessor);
+            var cart = new ShoppingCart(taxAssessor, _roundingStrategy);
             cart.AddItem(getProduct("imported bottle of perfume", 27.99m), 1);
             cart.AddItem(getProduct("bottle of perfume"), 1);
             cart.AddItem(getProduct("packet of headache pills"), 1);

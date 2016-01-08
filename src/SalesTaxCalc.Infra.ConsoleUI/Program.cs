@@ -22,11 +22,12 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         private static ShoppingCart _activeCart;
         private static int _nextProductID;
         private static IProvideTaxRateForProduct taxAssessor;
+        private static IRoundingStrategy _roundingStrategy;
 
     private static void Main(string[] pArguments)
         {
             taxAssessor = new TaxRateAssesor(new Percentage(10), new Percentage(5));
-
+            _roundingStrategy = new RoundUpToNearestOneTwentiethRoundingRule();
             initializeInventory();
 
             var mainMenu = new Dictionary<string, string>() { { "P", "Products" }, { "N", "New Shopping Cart" } };
@@ -81,7 +82,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         private static void shoppingCartMenu()
         {
-            _activeCart = new ShoppingCart(taxAssessor);
+            _activeCart = new ShoppingCart(taxAssessor, _roundingStrategy);
             var shoppingCart = new Dictionary<string, string>()
             {
                 {"A", "Add an item to the cart."},

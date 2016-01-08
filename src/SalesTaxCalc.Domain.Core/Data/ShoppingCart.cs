@@ -15,20 +15,23 @@ namespace SalesTaxCalc.Domain.Core.Data
     {
         private readonly IList<Product> _items;
         private readonly IProvideTaxRateForProduct _taxAssessor;
+        private readonly IRoundingStrategy _roundingStrategy;
 
         #region Constructors
 
-        // TODO: inject this with IoC
-        public ShoppingCart(IProvideTaxRateForProduct taxAssessor)
+        // TODO: inject these with IoC
+        public ShoppingCart(IProvideTaxRateForProduct taxAssessor, IRoundingStrategy roundingStrategy)
         {
             _items = new List<Product>();
             _taxAssessor = taxAssessor;
+            _roundingStrategy = roundingStrategy;
         }
 
-        public ShoppingCart(IEnumerable<Product> pItems, IProvideTaxRateForProduct taxAssessor)
+        public ShoppingCart(IEnumerable<Product> pItems, IProvideTaxRateForProduct taxAssessor, IRoundingStrategy roundingStrategy)
         {
-            _items = new List<Product>(pItems);
+            _items = pItems.ToList();
             _taxAssessor = taxAssessor;
+            _roundingStrategy = roundingStrategy;
         }
 
         public List<Product> Items
@@ -49,7 +52,7 @@ namespace SalesTaxCalc.Domain.Core.Data
             return from item in _items
                 group item.ProductID by item
                 into prodGroup
-                let taxAmount = roundToNearestOneTwentieth(_taxAssessor.GetApplicableTaxRateForProduct(prodGroup.Key.ProductType, prodGroup.Key.IsImported).ActualValue*prodGroup.Key.ShelfPrice)
+                let taxAmount = _roundingStrategy.GetRoundedValue(_taxAssessor.GetApplicableTaxRateForProduct(prodGroup.Key.ProductType, prodGroup.Key.IsImported).ActualValue*prodGroup.Key.ShelfPrice)
                 let quantity = prodGroup.Count()
                 let shelfPriceWithTax = prodGroup.Key.ShelfPrice + taxAmount
                 let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity
@@ -70,10 +73,5 @@ namespace SalesTaxCalc.Domain.Core.Data
             return GetLineItems().Sum(pLine => pLine.Total);
         }
 
-        private decimal roundToNearestOneTwentieth(decimal pValue)
-        {
-            //ref: http://stackoverflow.com/a/1448465/1240322
-            return Math.Ceiling(pValue*20)/20;
-        }
     }
 }

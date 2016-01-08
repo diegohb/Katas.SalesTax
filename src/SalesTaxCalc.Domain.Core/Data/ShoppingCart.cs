@@ -6,24 +6,29 @@
 
 namespace SalesTaxCalc.Domain.Core.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+  using Services;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
-    public class ShoppingCart
+  public class ShoppingCart
     {
         private readonly IList<Product> _items;
+        private readonly IProvideTaxRateForProduct _taxAssessor;
 
         #region Constructors
 
-        public ShoppingCart()
+        // TODO: inject this with IoC
+        public ShoppingCart(IProvideTaxRateForProduct taxAssessor)
         {
             _items = new List<Product>();
+            _taxAssessor = taxAssessor;
         }
 
-        public ShoppingCart(IEnumerable<Product> pItems)
+        public ShoppingCart(IEnumerable<Product> pItems, IProvideTaxRateForProduct taxAssessor)
         {
             _items = new List<Product>(pItems);
+            _taxAssessor = taxAssessor;
         }
 
         public List<Product> Items
@@ -44,7 +49,7 @@ namespace SalesTaxCalc.Domain.Core.Data
             return from item in _items
                 group item.ProductID by item
                 into prodGroup
-                let taxAmount = roundToNearestOneTwentieth(prodGroup.Key.TaxRateValue*prodGroup.Key.ShelfPrice)
+                let taxAmount = roundToNearestOneTwentieth(_taxAssessor.GetApplicableTaxRateForProduct(prodGroup.Key.ProductType, prodGroup.Key.IsImported).ActualValue*prodGroup.Key.ShelfPrice)
                 let quantity = prodGroup.Count()
                 let shelfPriceWithTax = prodGroup.Key.ShelfPrice + taxAmount
                 let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity

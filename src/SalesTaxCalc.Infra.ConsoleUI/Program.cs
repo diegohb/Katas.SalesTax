@@ -6,22 +6,27 @@
 
 namespace SalesTaxCalc.Infra.ConsoleUI
 {
+  using Domain.Core;
   using Domain.Core.Data;
+  using Domain.Core.Impl;
+  using Domain.Core.Services;
+  using Domain.Core.ValueObjects;
   using System;
   using System.Collections.Generic;
   using System.Linq;
-  
+
   internal class Program
     {
-        private const decimal baseSalesTaxValue = 0.1m;
-        private const decimal importTariffValue = .05m;
 
         private static List<Product> _products;
         private static ShoppingCart _activeCart;
         private static int _nextProductID;
+        private static IProvideTaxRateForProduct taxAssessor;
 
-        private static void Main(string[] pArguments)
+    private static void Main(string[] pArguments)
         {
+            taxAssessor = new TaxRateAssesor(new Percentage(10), new Percentage(5));
+
             initializeInventory();
 
             var mainMenu = new Dictionary<string, string>() { { "P", "Products" }, { "N", "New Shopping Cart" } };
@@ -76,7 +81,7 @@ namespace SalesTaxCalc.Infra.ConsoleUI
 
         private static void shoppingCartMenu()
         {
-            _activeCart = new ShoppingCart();
+            _activeCart = new ShoppingCart(taxAssessor);
             var shoppingCart = new Dictionary<string, string>()
             {
                 {"A", "Add an item to the cart."},
@@ -199,26 +204,23 @@ namespace SalesTaxCalc.Infra.ConsoleUI
         {
             _products = new List<Product>()
             {
-                createProduct("book", 12.49m, pType: ProductTypeEnum.Book),
+                createProduct("book", 12.49m, pType: ProductCategoryEnum.Books),
                 createProduct("music CD", 14.99m),
-                createProduct("chocolate bar", 0.85m, pType: ProductTypeEnum.Food),
-                createProduct("imported box of chocolates", 10m, true, ProductTypeEnum.Food),
+                createProduct("chocolate bar", 0.85m, pType: ProductCategoryEnum.Food),
+                createProduct("imported box of chocolates", 10m, true, ProductCategoryEnum.Food),
                 createProduct("imported bottle of perfume", 47.50m, true),
                 createProduct("imported bottle of perfume", 27.99m, true),
                 createProduct("bottle of perfume", 18.99m),
-                createProduct("packet of headache pills", 9.75m, pType: ProductTypeEnum.Medical),
-                createProduct("box of imported chocolates", 11.25m, true, ProductTypeEnum.Food)
+                createProduct("packet of headache pills", 9.75m, pType: ProductCategoryEnum.Medical),
+                createProduct("box of imported chocolates", 11.25m, true, ProductCategoryEnum.Food)
             };
         }
 
         private static Product createProduct
-            (string pName, decimal pShelfPrice, bool pIsImported = false, ProductTypeEnum pType = ProductTypeEnum.Other)
+            (string pName, decimal pShelfPrice, bool pIsImported = false, ProductCategoryEnum pType = ProductCategoryEnum.Other)
         {
-            var basicSalesTaxApplicable = pType == ProductTypeEnum.Other ? baseSalesTaxValue : 0m;
-            var importTariffApplicable = pIsImported ? importTariffValue : 0m;
-            var assessedTaxValue = basicSalesTaxApplicable + importTariffApplicable;
 
-            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, TaxRateValue = assessedTaxValue, IsImported = pIsImported };
+            var product = new Product(getNextProductID(), pName, pShelfPrice) { ProductType = pType, IsImported = pIsImported };
             return product;
         }
 

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ProductTests.cs" />
+    <Compile Include="Data\ShoppingCartTests.cs" />
     <Compile Include="Services\ProductPricingServiceTests.cs" />
     <Compile Include="Services\ProductTaxRateAssessorTests.cs" />
     <Compile Include="Utility.cs" />

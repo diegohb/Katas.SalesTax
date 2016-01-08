@@ -41,6 +41,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Product.cs" />
+    <Compile Include="Data\ProductTypeEnum.cs" />
+    <Compile Include="Data\ReceiptLineItem.cs" />
+    <Compile Include="Data\ShoppingCart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

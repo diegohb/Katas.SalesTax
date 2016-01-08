@@ -1,6 +1,6 @@
 // *************************************************
-// SalesTaxCalc.Infra.ConsoleUI.ReceiptLineItem.cs
-// Last Modified: 04/18/2015 5:15 PM
+// SalesTaxCalc.Domain.Core.ReceiptLineItem.cs
+// Last Modified: 01/08/2016 2:41 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 

@@ -1,14 +1,14 @@
 ﻿// *************************************************
-// SalesTaxCalc.Infra.ConsoleUI.ShoppingCart.cs
-// Last Modified: 04/18/2015 5:15 PM
+// SalesTaxCalc.Domain.Core.ShoppingCart.cs
+// Last Modified: 01/08/2016 2:41 PM
 // Modified By: Bustamante, Diego (bustamd1)
 // *************************************************
 
 namespace SalesTaxCalc.Domain.Core.Data
 {
-    using Services;
     using System.Collections.Generic;
     using System.Linq;
+    using Services;
 
     public class ShoppingCart
     {
@@ -51,7 +51,10 @@ namespace SalesTaxCalc.Domain.Core.Data
             return from item in _items
                 group item.ProductID by item
                 into prodGroup
-                let taxAmount = _roundingStrategy.GetRoundedValue(_taxAssessor.GetApplicableTaxRateForProduct(prodGroup.Key.ProductType, prodGroup.Key.IsImported).ActualValue*prodGroup.Key.ShelfPrice)
+                let taxAmount =
+                    _roundingStrategy.GetRoundedValue
+                        (_taxAssessor.GetApplicableTaxRateForProduct(prodGroup.Key.ProductType, prodGroup.Key.IsImported).ActualValue
+                         *prodGroup.Key.ShelfPrice)
                 let quantity = prodGroup.Count()
                 let shelfPriceWithTax = prodGroup.Key.ShelfPrice + taxAmount
                 let shelfPriceTotal = prodGroup.Key.ShelfPrice*quantity
@@ -71,6 +74,5 @@ namespace SalesTaxCalc.Domain.Core.Data
         {
             return GetLineItems().Sum(pLine => pLine.Total);
         }
-
     }
 }

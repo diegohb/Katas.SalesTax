@@ -41,12 +41,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Product.cs" />
-    <Compile Include="Data\ProductTypeEnum.cs" />
-    <Compile Include="Data\ReceiptLineItem.cs" />
-    <Compile Include="Data\ShoppingCart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SalesTaxCalc.Domain.Core\SalesTaxCalc.Domain.Core.csproj">
+      <Project>{efe25362-719e-4391-a2c5-d7e5bb0ffe1e}</Project>
+      <Name>SalesTaxCalc.Domain.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

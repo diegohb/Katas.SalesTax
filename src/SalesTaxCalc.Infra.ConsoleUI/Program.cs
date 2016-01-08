@@ -6,13 +6,12 @@
 
 namespace SalesTaxCalc.Infra.ConsoleUI
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Data;
-
-    internal class Program
+  using Domain.Core.Data;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+  
+  internal class Program
     {
         private const decimal baseSalesTaxValue = 0.1m;
         private const decimal importTariffValue = .05m;

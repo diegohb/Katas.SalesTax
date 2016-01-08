@@ -1,9 +1,11 @@
+This repository was created to first meet the instructions provided below. It is becoming a place to prototype concepts and technologies for purposes of training and learning.
+
 #Coding Katas
 A code kata is an exercise in programming which helps a programmer hone their skills through practice and repetition. The term was probably first coined by Dave Thomas, co-author of the book The Pragmatic Programmer, in a bow to the Japanese concept of kata in the martial arts. As of October 2011, Dave Thomas has published 21 different katas.
 
 ref: https://en.wikipedia.org/wiki/Kata_(programming)  
 
-##The problem domain - Sales Tax Calculation
+##Sales Tax Calculation
 Basic sales tax is applicable at a rate of 10% on all goods, except books, food, and medical products, which are exempt. Import duty is an additional sales tax applicable on all imported goods at a rate of 5%, with no exemptions. 
 
 A receipt is produced for each purchased item listing the name of the items and the price, including the tax. The receipt also shows the total for all items purchased and the total sales tax paid.  The rounding rules for sales tax are for a tax rate of n%, a shelf price of p contains (np/100 rounded up to the nearest 0.05) amount of sales tax. 
